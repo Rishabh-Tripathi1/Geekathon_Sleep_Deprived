@@ -27,7 +27,7 @@ const HomePage = () => {
                 // Update the messages state with the response from the backend
                 setMessages([
                     ...messages,
-                    { text: 'User uploaded a file', sender: 'user' },
+                    { text: 'DocsGPT says...', sender: 'user' },
                     { text: data.message, sender: 'bot' }, // Assuming 'message' is the key in the backend response
                 ]);
 
@@ -58,12 +58,12 @@ const HomePage = () => {
     return (
         <div className='home'>
             <div className='heading'>
-                <h1 className='home-head'>CHATBOT-WA</h1>
+                <h1 className='home-head'>DocsGPT</h1>
             </div>
 
             <div className="card">
                 <div className='heading'>
-                    <h2 className='bot-head'>Questions and Answering</h2>
+                    <h2 className='bot-head'>Summarization</h2>
                 </div>
                 <div className='chat-container'>
                     <div className='messages'>
@@ -79,7 +79,9 @@ const HomePage = () => {
                                     onChange={handleFileUpload}
                                     accept=".txt, .pdf, .docx"
                                 />
+                                <div className='message'>Please Upload Your File For Summary</div>
                             </div>
+
                         )}
 
                         {showChatInterface && (
