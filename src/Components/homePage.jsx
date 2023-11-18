@@ -58,7 +58,7 @@ const HomePage = () => {
     return (
         <div className='home'>
             <div className='heading'>
-                <h1 className='home-head'>DocsGPT</h1>
+                <a className='home-head' href=".">DocsGPT</a>
             </div>
 
             <div className="card">
@@ -79,7 +79,8 @@ const HomePage = () => {
                                     onChange={handleFileUpload}
                                     accept=".txt, .pdf, .docx"
                                 />
-                                <div className='message'>Please Upload Your File For Summary</div>
+                                <p className='message'>Please Upload Your File For Summary <br></br>
+                                    Upload .txt .docx or .pdf files only</p>
                             </div>
 
                         )}
@@ -92,6 +93,8 @@ const HomePage = () => {
                                             {message.text}
                                         </p>
                                     ))}
+
+                                    <button>Regenerate</button>
                                 </div>
                                 {/* <div className="input-container">
                                     <input
