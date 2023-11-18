@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './HomePage.css';
-import ChatInterface from './ChatInterface';
 
 const HomePage = () => {
     const [isFileUploaded, setIsFileUploaded] = useState(false);

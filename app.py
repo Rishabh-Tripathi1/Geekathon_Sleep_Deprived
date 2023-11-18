@@ -9,8 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Load the T5 model and tokenizer once when the application starts
-model = T5ForConditionalGeneration.from_pretrained("t5-base")
-tokenizer = T5Tokenizer.from_pretrained("t5-base")
+
 
 def generate_summary(text):
     inputs = tokenizer.encode(
@@ -63,10 +62,11 @@ def upload_file():
 
     paragraph = "This is a simple paragraph"
 
+    data = process_file()
+
     return jsonify({'message': paragraph}), 200
 
 
-@app.route('/generate_summary', methods=['POST'])
 def process_file():
     global uploaded_file_info
 
@@ -94,10 +94,9 @@ def process_file():
 
     summary = generate_summary(text)
 
-    return jsonify({'summary': summary})
+    return summary
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
-if __name__ == '__main__':
+    model = T5ForConditionalGeneration.from_pretrained("t5-base")
+    tokenizer = T5Tokenizer.from_pretrained("t5-base")
     app.run(debug=True)
