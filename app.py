@@ -2,30 +2,48 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 import PyPDF2
-from transformers import T5ForConditionalGeneration, T5Tokenizer
-from docx import Document
+# from transformers import T5ForConditionalGeneration, T5Tokenizer
+# from docx import Document
+import spacy
+from spacy.lang.en.stop_words import STOP_WORDS
+from string import punctuation
+from heapq import nlargest
+from spacy.lang.en import English
 
 app = Flask(__name__)
 CORS(app)
 
-# Load the T5 model and tokenizer once when the application starts
-model = T5ForConditionalGeneration.from_pretrained("t5-base")
-tokenizer = T5Tokenizer.from_pretrained("t5-base")
 
 def generate_summary(text):
-    inputs = tokenizer.encode(
-        "summarize: " + text, 
-        return_tensors="pt", 
-        max_length=1000, 
-        truncation=True)
-    outputs = model.generate(
-        inputs, 
-        max_length=1000, 
-        min_length=100, 
-        length_penalty=2.0, 
-        num_beams=4, 
-        early_stopping=True)
-    summary = tokenizer.decode(outputs[0])
+    stopwords = list(STOP_WORDS)
+    nlp = spacy.load('en_core_web_sm')
+    doc = nlp(text)
+    tokens = [token.text for token in doc]
+    word_frequencies = {}
+    for word in doc:
+        if word.text.lower() not in stopwords:
+            if word.text.lower() not in punctuation:
+                if word.text not in word_frequencies.keys():
+                    word_frequencies[word.text] = 1
+                else:
+                    word_frequencies[word.text] += 1
+    max_frequency = max(word_frequencies.values())
+
+    for word in word_frequencies.keys():
+        word_frequencies[word] = word_frequencies[word] / max_frequency
+    sentence_tokens = [sent for sent in doc.sents]
+    sentence_scores = {}
+    for sent in sentence_tokens:
+        for word in sent:
+            if word.text.lower() in word_frequencies.keys():
+                if sent not in sentence_scores.keys():
+                    sentence_scores[sent] = word_frequencies[word.text.lower()]
+                else:
+                    sentence_scores[sent] += word_frequencies[word.text.lower()]
+
+    select_length = int(len(sentence_tokens) * 0.3)
+    summary = nlargest(select_length, sentence_scores, key=sentence_scores.get)
+    
     return summary
 
 def extract_text_from_pdf(pdf_path):
@@ -37,12 +55,12 @@ def extract_text_from_pdf(pdf_path):
             text += page.extract_text()
     return text
 
-def extract_text_from_docx(docx_path):
-    doc = Document(docx_path)
-    text = ""
-    for paragraph in doc.paragraphs:
-        text += paragraph.text + "\n"
-    return text
+# def extract_text_from_docx(docx_path):
+#     doc = Document(docx_path)
+#     text = ""
+#     for paragraph in doc.paragraphs:
+#         text += paragraph.text + "\n"
+#     return text
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -87,8 +105,8 @@ def process_file():
 
     if file_path.lower().endswith('.pdf'):
         text = extract_text_from_pdf(file_path)
-    elif file_path.lower().endswith('.docx'):
-        text = extract_text_from_docx(file_path)
+    # elif file_path.lower().endswith('.docx'):
+    #     text = extract_text_from_docx(file_path)
     else:
         return jsonify({'error': 'Unsupported file type'})
 
@@ -97,7 +115,7 @@ def process_file():
     return jsonify({'summary': summary})
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
-if __name__ == '__main__':
+    # Load the T5 model and tokenizer once when the application starts
+    # model = T5ForConditionalGeneration.from_pretrained("t5-base")
+    # tokenizer = T5Tokenizer.from_pretrained("t5-base")
     app.run(debug=True)
