@@ -218,7 +218,7 @@ input {
 
 button {
     padding: 8px 12px;
-    background-color: #4285f4;
+    background-color: #0058c3;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -226,9 +226,33 @@ button {
 }
 
 .para {
-    color: blue;
+    color: 0058c3;
 }
 
 .tabs {
     padding: 20px;
+}
+
+#sum {
+    background-color: white;
+    color: #0058c3;
+    font-family: product sans;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.vertical-line {
+    display: inline-block;
+    height: 25px;
+    width: 1px;
+    background-color: #0058c3;
+}
+
+
+#qna {
+    background-color: white;
+    color: #0058c3;
+    font-family: product sans;
+    font-size: 20px;
+    font-weight: bold;
 }

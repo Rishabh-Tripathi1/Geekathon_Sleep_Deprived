@@ -1,9 +1,6 @@
-// App.js
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './HomePage.css';
-import Summarize from './Summarize';
-import Qna from './Qna';
+import './Qna.css';
 
 const Home = () => {
     const [activeTab, setActiveTab] = useState('summarization');
@@ -12,8 +9,9 @@ const Home = () => {
     const [showChatInterface, setShowChatInterface] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState('');
+    const [qna, setqna] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [fileName, setFileName] = useState('');
 
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
@@ -33,20 +31,41 @@ const Home = () => {
                 setShowPopup(true);
                 setShowFeaturesTab(true);
 
-                // Update the messages state with the response from the backend
                 setMessages([
                     ...messages,
                     { text: 'DocsGPT says...', sender: 'user' },
-                    { text: data.message, sender: 'bot' }, // Assuming 'message' is the key in the backend response
+                    { text: data.message, sender: 'bot' },
                 ]);
 
-                // Reset the file input value to allow re-uploading of the same file
                 document.getElementById('fileInput').value = '';
 
-                // Set a timeout to automatically hide the popup after 3 seconds
                 setTimeout(() => {
                     setShowPopup(false);
                 }, 3000);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    };
+
+    const handleRegenerate = (e) => {
+        const formData = new FormData();
+        formData.append('fileName', fileName);
+        fetch('http://localhost:5000/regenerate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ fileName }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('File uploaded:', data);
+                setMessages([
+                    { text: 'DocsGPT says...', sender: 'user' },
+                    { text: data.message, sender: 'bot' },
+                ]);
+                document.getElementById('fileInput').value = '';
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -59,6 +78,29 @@ const Home = () => {
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
+    };
+
+    const addBotResponse = (question) => {
+        fetch('http://localhost:5000/qna', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "question": question }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setqna((qna) => [
+                    ...qna,
+                    { text: data.message, sender: 'bot' },
+                ]);
+            })
+            .catch((error) => console.error('Error:', error));
+    };
+
+    const handleUserInput = (message) => {
+        setqna([...qna, { text: message, sender: 'user' }]);
+        addBotResponse(message);
     };
 
 
@@ -95,6 +137,7 @@ const Home = () => {
                                 >
                                     Summarization
                                 </button>
+                                <span className="vertical-line"></span>
                                 <button
                                     id='qna' className={activeTab === 'regeneration' ? 'active' : ''}
                                     onClick={() => handleTabClick('regeneration')}
@@ -113,7 +156,7 @@ const Home = () => {
                                                     </p>
                                                 ))}
 
-                                                <button>Regenerate</button>
+                                                <button onClick={handleRegenerate}>Regenerate</button>
                                             </div>
                                         </div>
                                     )}
@@ -125,7 +168,29 @@ const Home = () => {
                                         </div>
                                     )}
                                 </div>}
-                                {activeTab === 'regeneration' && <Qna />}
+                                {activeTab === 'regeneration' && <div className="chat1-container">
+                                    <div className='chatting'>
+                                        <div className="qna">
+                                            {qna.map((message, index) => (
+                                                <div key={index} className={`message-${message.sender}-message`}>
+                                                    {message.text}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="input-container">
+                                        <input
+                                            type="text"
+                                            placeholder="Type your message..."
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') {
+                                                    handleUserInput(e.target.value);
+                                                    e.target.value = '';
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                </div>}
                             </div>
                         </div>
                     )}
