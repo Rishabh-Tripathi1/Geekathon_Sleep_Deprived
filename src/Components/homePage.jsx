@@ -24,6 +24,13 @@ const HomePage = () => {
                 setShowChatInterface(true);
                 setShowPopup(true);
 
+                // Update the messages state with the response from the backend
+                setMessages([
+                    ...messages,
+                    { text: 'User uploaded a file', sender: 'user' },
+                    { text: data.message, sender: 'bot' }, // Assuming 'message' is the key in the backend response
+                ]);
+
                 // Reset the file input value to allow re-uploading of the same file
                 document.getElementById('fileInput').value = '';
 
@@ -78,15 +85,13 @@ const HomePage = () => {
                         {showChatInterface && (
                             <div className="chat-interface">
                                 <div className="messages-container">
-                                    <ul>
-                                        {messages.map((message, index) => (
-                                            <li key={index} className={message.sender}>
-                                                {message.text}
-                                            </li>
-                                        ))}
-                                    </ul>
+                                    {messages.map((message, index) => (
+                                        <p key={index} className={message.sender}>
+                                            {message.text}
+                                        </p>
+                                    ))}
                                 </div>
-                                <div className="input-container">
+                                {/* <div className="input-container">
                                     <input
                                         type="text"
                                         placeholder="Type your message..."
@@ -94,7 +99,7 @@ const HomePage = () => {
                                         onChange={(e) => setNewMessage(e.target.value)}
                                     />
                                     <button onClick={handleSendMessage}>Send</button>
-                                </div>
+                                </div> */}
                             </div>
                         )}
 
