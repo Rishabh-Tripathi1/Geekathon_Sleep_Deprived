@@ -96,13 +96,13 @@
     color: #0058c3;
 }
 
-/* .upload-button:hover {
+.upload-button:hover {
     background-color: #0058c3;
     color: white;
-    /* Darker color on hover */
+}
 
 
-*/
+
 
 /* Additional styles for the animation effect when pressed */
 .upload-button:active {
@@ -227,4 +227,8 @@ button {
 
 .para {
     color: blue;
+}
+
+.tabs {
+    padding: 20px;
 }

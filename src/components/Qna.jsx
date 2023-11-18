@@ -1,24 +1,13 @@
 import React, { useState } from 'react';
 import './HomePage.css';
-import ChatInterface from './ChatInterface';
+import Qna from './Qna';
 
 const HomePage = () => {
-    const [isFileUploaded, setIsFileUploaded] = useState(false);
-    const [showChatInterface, setShowChatInterface] = useState(false);
 
 
 
     return (
         <div className="chat-interface">
-            <div className="messages-container">
-                <ul>
-                    {messages.map((message, index) => (
-                        <li key={index} className={message.sender}>
-                            {message.text}
-                        </li>
-                    ))}
-                </ul>
-            </div>
             <div className="input-container">
                 <input
                     type="text"

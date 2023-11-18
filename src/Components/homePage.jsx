@@ -8,9 +8,11 @@ const HomePage = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
+        setLoading(true);
         const formData = new FormData();
         formData.append('file', file);
 
@@ -71,7 +73,7 @@ const HomePage = () => {
                         {!showChatInterface && (
                             <div className="upload-button-container">
                                 <label htmlFor="fileInput" className="upload-button">
-                                    Upload File
+                                    {loading ? 'Processing...' : 'Upload File'}
                                 </label>
                                 <input
                                     type="file"

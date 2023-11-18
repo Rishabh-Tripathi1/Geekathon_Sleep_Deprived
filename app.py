@@ -76,6 +76,6 @@ def summarize(text):
 
 
 if __name__ == '__main__':
-    cookie = "sessionKey=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; intercom-device-id-lupk8zyo=651ccf97-6e06-44b1-a97e-29fb8aa82698; intercom-session-lupk8zyo=Z3BlZWxndDdJWWZLeEJvQTQ2VDRzZkxodGVadVlTVTZia1Nxdmh5NG42MFpCQzZodWFTV2IwRXh2N3ZkYmJtaC0tcXdValdsSzk5YjE3MkVDeWRXVXF4Zz09--cc78dfce84f8d49efeb24cef12375f554f1d4bf6; __cf_bm=bMdS1QviYFnm4k8cLF5p8BshvtT4AHUsIJkGyY3lCUI-1700282335-0-ARUe6pu1HRkBDXsftSDsJICG4JIVSwW0sjI+HxSIae87Z3EFH8jvc0Y2gBbkh6u3hFj9/LU3cFyCfRLvsc9KTJU="
+    cookie = "sessionKey=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; intercom-device-id-lupk8zyo=c901d9ce-7e81-420e-96b5-3aee2bddb89c;"
     claude = Claude(cookie)
     app.run(debug=True)
