@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './HomePage.css';
-
 
 const HomePage = () => {
     const handleFileUpload = (e) => {
@@ -31,7 +30,6 @@ const HomePage = () => {
             <div className="card">
                 <h2 className='bot-head'>Chat Interface</h2>
                 <div className='chat-container'>
-
                     <div className='messages'>
                         <div className="upload-button-container">
                             <label htmlFor="fileInput" className="upload-button">
@@ -47,20 +45,10 @@ const HomePage = () => {
                         </div>
                         <div className='message'>Please Upload File To Begin</div>
                     </div>
-
-                    {/* <div className='chat-box'>
-                        <div className='input-container'>
-                            <input type='text' placeholder='Type your message...' className='input-field' />
-                            <button className='send-button'>Send</button>
-                        </div>
-                    </div> */}
-
                 </div>
             </div>
         </div>
     );
-
 };
-
 
 export default HomePage;
