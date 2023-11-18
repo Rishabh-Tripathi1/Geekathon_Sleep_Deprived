@@ -41,19 +41,26 @@ def upload_file():
 
 def text():
     file_path = 'uploads/'+uploaded_file_info['name']
-    with open(file_path, 'rb') as file:
-   
-        reader = PyPDF2.PdfReader(file)
 
-        # Extract text from each page
-        text = ''
-        for page in reader.pages:
-            text += page.extract_text()
+    text = ""
 
-    # with open(file_path, 'r', encoding='utf-8') as file:
-    #     text = file.read()
+    if '.pdf' in uploaded_file_info['name']:
+        with open(file_path, 'rb') as file:
+    
+            reader = PyPDF2.PdfReader(file)
+            for page in reader.pages:
+                text += page.extract_text()
 
-    print("Text Extracted")
+    elif '.txt' in uploaded_file_info['name']:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            text = file.read()
+
+    else:
+        doc = Document(file_path)
+        for paragraph in doc.paragraphs:
+            text += paragraph.text + "\n"
+
+    print(type(uploaded_file_info['name']))
 
     return text
 

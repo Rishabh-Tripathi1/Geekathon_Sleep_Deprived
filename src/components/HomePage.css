@@ -85,19 +85,24 @@
 }
 
 .upload-button {
-    background-color: #0073ff;
+    background-color: #ffffff;
     text-align: center;
-    padding: 60px 220px;
+    padding: 80px 220px;
     border-radius: 5px;
+    border-style: dashed;
     transition: background-color 0.3s ease;
     cursor: pointer;
     font-size: 70px;
+    color: #0058c3;
 }
 
-.upload-button:hover {
-    background-color: #345b79;
+/* .upload-button:hover {
+    background-color: #0058c3;
+    color: white;
     /* Darker color on hover */
-}
+
+
+*/
 
 /* Additional styles for the animation effect when pressed */
 .upload-button:active {

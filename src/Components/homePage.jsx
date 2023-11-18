@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDropzone } from 'react-dropzone';
 import './HomePage.css';
 
 const HomePage = () => {
