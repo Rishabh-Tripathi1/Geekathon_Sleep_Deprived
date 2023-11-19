@@ -5,6 +5,7 @@ const Qna = () => {
     const [qna, setqna] = useState([]);
 
     const addBotResponse = (question) => {
+        setLoading(true);
         fetch('http://localhost:5000/qna', {
             method: 'POST',
             headers: {
@@ -18,8 +19,12 @@ const Qna = () => {
                     ...qna,
                     { text: data.message, sender: 'bot' },
                 ]);
+                setLoading(false);
             })
-            .catch((error) => console.error('Error:', error));
+            .catch((error) => {
+                console.error('Error:', error);
+                setLoading(false);
+            });
     };
 
     const handleUserInput = (message) => {
@@ -36,6 +41,7 @@ const Qna = () => {
                             {message.text}
                         </div>
                     ))}
+                    {loading && <div className="loading">Loading...</div>}
                 </div>
             </div>
             <div className="input-container">

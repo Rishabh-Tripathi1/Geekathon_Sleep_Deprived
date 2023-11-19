@@ -88,6 +88,6 @@ def summarize(text):
 
 
 if __name__ == '__main__':
-    cookie = "sessionKey=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; cf_clearance=YdjTthpKaRMejFWCKoV8C8WMyVIMVJXchzHJr10x8qM-1700339937-0-1-d8629b3f.b09edf77.8f63c4df-0.2.1700339937; stripe_sid=fa549f07-df25-4ae9-ada6-96c75684bf12110e44; cf_bm=MqZedKMXP4EW56IJQGdk2BsF2VpcZ2AQzV605UVhyfc-1700341297-0-AfpdDCu2D/nFvOCJZUg3oN2Um7ve83xMeFQwXvGHfyMyblHUmbSC+7Lt2YQ6oFp7g+le0YifTeittx8MNw5wzDg=; intercom-session-lupk8zyo=WjVSS0JMUm5yWWZRYys3NFFMdHlXUmZhVWFjTVIzNThSQm53bC9xWHFHbHZwSmx2NStLUlo5U3B0QXhPMzlpNS0taUdlaWdMK1VKaE9QMXhRalpleURNZz09--40d6966e57280ae6deb3046080513299da536f2f"
+    cookie = "sessionKey=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; intercom-device-id-lupk8zyo=f9f01c2f-ef81-4601-8167-57df865dbaa2; intercom-session-lupk8zyo=SUZWUk9DeXc0YWJOSXJEeHlja1NsblRaY3RmM3ZBalhSSUh3K3FVc1psaXFUbzdDZUxScncveEorOVJqYVZWTS0tbVZvK0c0RDQ2SVNIckY1TkpVdnBKUT09--77b5fe2c0d6ffc46000cfd8a2c663df775035cbe"
     claude = Claude(cookie)
     app.run(debug=True)

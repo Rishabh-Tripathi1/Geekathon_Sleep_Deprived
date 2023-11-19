@@ -4,14 +4,15 @@ import './Qna.css';
 
 const Home = () => {
     const [activeTab, setActiveTab] = useState('summarization');
-    const [showFeaturesTab, setShowFeaturesTab] = useState(false);
-    const [isFileUploaded, setIsFileUploaded] = useState(false);
-    const [showChatInterface, setShowChatInterface] = useState(false);
+    const [showFeaturesTab, setShowFeaturesTab] = useState(true);
+    const [isFileUploaded, setIsFileUploaded] = useState(true);
+    const [showChatInterface, setShowChatInterface] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
     const [messages, setMessages] = useState([]);
     const [qna, setqna] = useState([]);
     const [loading, setLoading] = useState(false);
     const [fileName, setFileName] = useState('');
+
 
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
@@ -81,6 +82,11 @@ const Home = () => {
     };
 
     const addBotResponse = (question) => {
+        setqna((prevQna) => [
+            ...prevQna,
+            { text: 'Generating Response...', sender: 'bot' },
+        ]);
+        // const prevMessages = qna.slice(0, qna.length - 1);
         fetch('http://localhost:5000/qna', {
             method: 'POST',
             headers: {
@@ -90,8 +96,8 @@ const Home = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                setqna((qna) => [
-                    ...qna,
+                setqna((prevQna) => [
+                    ...prevQna.slice(0, -1),  // Remove the loading message
                     { text: data.message, sender: 'bot' },
                 ]);
             })
@@ -99,7 +105,10 @@ const Home = () => {
     };
 
     const handleUserInput = (message) => {
-        setqna([...qna, { text: message, sender: 'user' }]);
+        setqna((prevQna) => [
+            ...prevQna,
+            { text: message, sender: 'user' },
+        ]);
         addBotResponse(message);
     };
 
@@ -115,7 +124,7 @@ const Home = () => {
                     {!isFileUploaded && (
                         <div className="upload-button-container">
                             <label htmlFor="fileInput" className="upload-button">
-                                {loading ? 'Processing...' : 'Upload File'}
+                                {loading ? 'Processing...' : 'Upload File...'}
                             </label>
                             <input
                                 type="file"
@@ -156,7 +165,7 @@ const Home = () => {
                                                     </p>
                                                 ))}
 
-                                                <button onClick={handleRegenerate}>Regenerate</button>
+                                                <button className='regen' onClick={handleRegenerate}>Regenerate</button>
                                             </div>
                                         </div>
                                     )}
@@ -170,6 +179,7 @@ const Home = () => {
                                 </div>}
                                 {activeTab === 'regeneration' && <div className="chat1-container">
                                     <div className='chatting'>
+                                        <p className='message-bot-message'>Hi, I'm DocsGPT. What is your question?</p>
                                         <div className="qna">
                                             {qna.map((message, index) => (
                                                 <div key={index} className={`message-${message.sender}-message`}>

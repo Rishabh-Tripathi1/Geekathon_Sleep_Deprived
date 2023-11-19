@@ -45,6 +45,10 @@
 .upload-button-container {
     display: flex;
     flex-direction: column;
+    width: 80%;
+    align-items: center;
+    margin-left: 11%;
+    margin-top: 3%;
 }
 
 .messages {
@@ -101,8 +105,11 @@
     color: white;
 }
 
-
-
+.regen {
+    font-size: 24px;
+    font-family: product sans;
+    font-weight: lighter;
+}
 
 /* Additional styles for the animation effect when pressed */
 .upload-button:active {
@@ -111,6 +118,7 @@
     transition: transform 0.1s ease;
     /* Add a quick transition effect */
 }
+
 
 .send-button {
     background-color: #1561be;
@@ -239,12 +247,18 @@ button {
     font-family: product sans;
     font-size: 20px;
     font-weight: bold;
+    margin-right: 5px;
+}
+
+#sum:hover {
+    background-color: rgb(18, 184, 18);
+    color: white;
 }
 
 .vertical-line {
     display: inline-block;
     height: 25px;
-    width: 1px;
+    width: 2px;
     background-color: #0058c3;
 }
 
@@ -255,4 +269,10 @@ button {
     font-family: product sans;
     font-size: 20px;
     font-weight: bold;
+    margin-left: 5px;
+}
+
+#qna:hover {
+    background-color: rgb(184, 18, 18);
+    color: white;
 }
