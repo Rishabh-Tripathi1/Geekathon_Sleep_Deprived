@@ -33,7 +33,9 @@
 }
 
 .heading {
-    margin-bottom: 20px;
+    height: 90px;
+    margin-bottom: 30px;
+
 }
 
 .chat-container {
@@ -268,7 +270,7 @@ button {
     outline: none !important;
 }
 
-.trans{
+.trans {
     font-size: 12px;
 }
 

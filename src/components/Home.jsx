@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './HomePage.css';
 import './Qna.css';
+import logo from '../assets/logo.png';
 
 
 const Home = () => {
 
     const [activeTab, setActiveTab] = useState('summarization');
-    const [showFeaturesTab, setShowFeaturesTab] = useState(true);
-    const [isFileUploaded, setIsFileUploaded] = useState(true);
-    const [showChatInterface, setShowChatInterface] = useState(true);
+    const [showFeaturesTab, setShowFeaturesTab] = useState(false);
+    const [isFileUploaded, setIsFileUploaded] = useState(false);
+    const [showChatInterface, setShowChatInterface] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const [messages, setMessages] = useState([]);
     const [qna, setqna] = useState([]);
@@ -124,7 +125,9 @@ const Home = () => {
     return (
         <div className="home">
             <div className='heading'>
-                <a className='home-head' href=".">DocsGPT</a>
+                <a href="">
+                    <img src={logo} alt='DocsGPT' />
+                </a>
             </div>
 
             <div className="card">
@@ -193,10 +196,7 @@ const Home = () => {
                                                     {message.text}
 
                                                 </div>
-                                            ))}
-                                            <button className="dropdown-button" onClick={toggleDropdown}>
-                                                Open Dropdown
-                                            </button>
+                                            ))} 
 
                                         </div>
                                     </div>

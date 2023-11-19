@@ -88,6 +88,6 @@ def summarize(text):
 
 
 if __name__ == '__main__':
-    cookie = "sessionKey=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; intercom-device-id-lupk8zyo=f9f01c2f-ef81-4601-8167-57df865dbaa2; intercom-session-lupk8zyo=SUZWUk9DeXc0YWJOSXJEeHlja1NsblRaY3RmM3ZBalhSSUh3K3FVc1psaXFUbzdDZUxScncveEorOVJqYVZWTS0tbVZvK0c0RDQ2SVNIckY1TkpVdnBKUT09--77b5fe2c0d6ffc46000cfd8a2c663df775035cbe"
+    cookie = "sessionKey=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; intercom-device-id-lupk8zyo=c901d9ce-7e81-420e-96b5-3aee2bddb89c;"
     claude = Claude(cookie)
     app.run(debug=True)

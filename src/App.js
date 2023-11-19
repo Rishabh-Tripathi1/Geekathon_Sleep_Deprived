@@ -8,7 +8,9 @@ function App() {
   return (
     <div className="App">
       <ParticlesComponent />
-      <Home />
+      <div className="content-container">
+        <Home />
+      </div>
     </div>
   );
 }
