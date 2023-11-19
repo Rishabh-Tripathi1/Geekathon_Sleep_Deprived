@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './HomePage.css';
 import './Qna.css';
 
+
 const Home = () => {
+
     const [activeTab, setActiveTab] = useState('summarization');
     const [showFeaturesTab, setShowFeaturesTab] = useState(true);
     const [isFileUploaded, setIsFileUploaded] = useState(true);
@@ -12,6 +14,12 @@ const Home = () => {
     const [qna, setqna] = useState([]);
     const [loading, setLoading] = useState(false);
     const [fileName, setFileName] = useState('');
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
 
 
     const handleFileUpload = (e) => {
@@ -97,7 +105,7 @@ const Home = () => {
             .then((response) => response.json())
             .then((data) => {
                 setqna((prevQna) => [
-                    ...prevQna.slice(0, -1),  // Remove the loading message
+                    ...prevQna.slice(0, -1),
                     { text: data.message, sender: 'bot' },
                 ]);
             })
@@ -164,7 +172,6 @@ const Home = () => {
                                                         {message.text}
                                                     </p>
                                                 ))}
-
                                                 <button className='regen' onClick={handleRegenerate}>Regenerate</button>
                                             </div>
                                         </div>
@@ -184,8 +191,13 @@ const Home = () => {
                                             {qna.map((message, index) => (
                                                 <div key={index} className={`message-${message.sender}-message`}>
                                                     {message.text}
+
                                                 </div>
                                             ))}
+                                            <button className="dropdown-button" onClick={toggleDropdown}>
+                                                Open Dropdown
+                                            </button>
+
                                         </div>
                                     </div>
                                     <div className="input-container">

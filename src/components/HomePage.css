@@ -262,6 +262,15 @@ button {
     background-color: #0058c3;
 }
 
+.language-select {
+    height: 40px !important;
+    margin-bottom: 15px;
+    outline: none !important;
+}
+
+.trans{
+    font-size: 12px;
+}
 
 #qna {
     background-color: white;
